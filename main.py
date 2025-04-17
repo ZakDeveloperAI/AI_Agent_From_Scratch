@@ -32,7 +32,7 @@ prompt = ChatPromptTemplate.from_messages(
     ]
 ).partial(format_instructions=parser.get_format_instructions())
 
-tools=[search_tool,wiki_tool]
+tools=[search_tool,wiki_tool,save_tool]
 agent=create_tool_calling_agent(
     llm=llm,
     prompt=prompt,
@@ -41,7 +41,7 @@ agent=create_tool_calling_agent(
 
 agent_executor=AgentExecutor(agent=agent,tools=tools,verbose=True)
 #query=input("Enter your query: ")
-query="Hammer Head shark?"
+query="what is the biggest country, save to a file"
 raw_response=agent_executor.invoke({"query":query})
 try:
     output=raw_response.get('output').strip('`json').strip()
